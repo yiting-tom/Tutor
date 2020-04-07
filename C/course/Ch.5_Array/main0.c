@@ -17,6 +17,7 @@ int main(void) {
     for(i = 0; i < LENGTH; i++) {
         printf("%d ", arr[i]);
     }
+
     putchar('\n');
 
     return 0;

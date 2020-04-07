@@ -3,6 +3,7 @@
 #define COLUMN 10
 
 int main(void) {
+
     int maze[ROW][COLUMN];
 
     for(int i = 0; i < ROW; i++) {

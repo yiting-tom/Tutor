@@ -9,8 +9,8 @@ int main(void) {
         scanf("%d", &input);
         getchar();
 
-        printf("This integer is odd or even? %c\n", ((input % 2) ? 'Y': 'N'));
-        printf("continous? (1:keep going, 2:stop) : ");
+        printf("This integer is odd or even? %c\n", ((input % 2) ? 'o': 'e'));
+        printf("continous? (1:keep going, 0:stop) : ");
         scanf("%d", &replay);
         getchar();
     } while(replay);
