@@ -1,20 +1,14 @@
 #include <stdio.h>
-#define LEN 5
+#define LEN 10
 
 int main(void) {
-    int arr[LEN] = {10, 20, 30, 40, 50};
-    int *p = arr;
+  int arr[LEN] = {0};
+  int *p = arr;
 
-    // Using pointer
-    for(int i = 0; i < LEN; i++) {
-        printf("*(p + %d): %d\n", i , *(p + i));
-    }
-    putchar('\n');
+  for(int i = 0; i < LEN; i++) {
+    printf("&arr[%d]: %p", i ,&arr[i]);
+    printf("\t\tptr + %d: %p\n", i, p + i);
+  }
 
-    // Using array
-    for(int i = 0; i < LEN; i++) {
-        printf("*(arr + %d): %d\n", i , *(arr + i));
-    }
-
-    return 0;
+  return 0;
 }
