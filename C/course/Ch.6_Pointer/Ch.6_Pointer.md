@@ -77,9 +77,11 @@ int** app = &ap;
 
 ## 6. 動態配置記憶體(main4.c, main5.c)
 - malloc(_size) and free(_var): 
->malloc 會配置 _size Bytes 的空間，並傳回該空間的位址, 若失敗則回傳NULL
-
->free 會釋放 _var 的記憶體空間
+> malloc 會配置 _size Bytes 的空間，並傳回該空間的位址, 若失敗則回傳NULL
+- calloc(_size, type_size):
+> calloc 配置完成後預設為型態的零值
+- free(&var)
+> free 會釋放 _var 的記憶體空間
 ``` c
 /* 一維配置 */
 int n=5;
@@ -96,4 +98,8 @@ int** array;
 array = (int**) malloc(row * sizeof(int*));
 for (i=0; i<row; i++)
 array[i] = (int*) malloc(col * sizeof(int));
+
+/* calloc */
+int *p = malloc(sizeof(int) * 1000);
+int *p = calloc(1000, sizeof(int));
 ```
