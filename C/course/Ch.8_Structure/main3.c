@@ -2,25 +2,53 @@
 #include <stdlib.h>
 #include <string.h>
 
+//struct date {
+//  int year;
+//  char* month;
+//  char* day;
+//};
+//typedef (struct date) Date;
+
 typedef struct date {
   int year;
   char* month;
-  char* day;
+  int day;
 } Date;
 
+void printDate(Date);
+void swapDay(Date *, Date *);
+
 int main(void) {
-  Date today = {2020, "Apr.", "Wen."};
-  Date tomorrow = {.month = "Apr.", .day = "Thr.", .year = 2020};
+  Date today = {2020, "Apr.", 3};
+  Date tomorrow = {.month = "Apr.", .day = 4, .year = 2020};
+
+//  int tempDay = today.day
+//  (. ) : 從變數取得屬性
+//  (->) : 從指標變數取得變數裡的屬性
 
   printf("Today:\n");
-  printf("year: %d\t", today.year);
-  printf("month: %s\t", today.month);
-  printf("day: %s\n", today.day);
-
+  printDate(today);
   printf("Tomorrow:\n");
-  printf("year: %d\t", tomorrow.year);
-  printf("month: %s\t", tomorrow.month);
-  printf("day: %s\n", tomorrow.day);
+  printDate(tomorrow);
+
+  swapDay(&today, &tomorrow); 
+
+  printf("\n\nToday:\n");
+  printDate(today);
+  printf("Tomorrow:\n");
+  printDate(tomorrow);
 
   return 0;
 }
+
+void printDate(Date date) {
+  printf("%d/%s/%d\n", date.year, date.month, date.day);
+}
+
+void swapDay(Date* today, Date* tomorrow) {
+  int tempDay = today->day;
+  today->day = tomorrow->day;
+  tomorrow->day = tempDay;
+}
+
+
