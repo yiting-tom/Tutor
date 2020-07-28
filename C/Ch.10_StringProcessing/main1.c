@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+
 #define LEN 80
 
 int main(void) {
@@ -18,7 +19,9 @@ int main(void) {
     int lenOfName2 = lenOfName1 - 1;
     char name2[lenOfName2];
     // setting all charactors to '\0'
-    memset(name2, '\0', lenOfName2);
+    for (int i=0; i<sizeof(name2)/sizeof(char); i++) name2[i] = '\0';
+
+    name2[lenOfName1-1] = '\0';
     strncpy(name2, buf, lenOfName2);
     printf("name:%s", name2);
 
