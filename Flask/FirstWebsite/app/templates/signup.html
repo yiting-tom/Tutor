@@ -1,0 +1,28 @@
+<html>
+<head>
+    <title>Regester Page</title>
+</head>
+
+<body>
+    <h1>Sign Up Page</h1>
+
+    <dir>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}w_mail>
+        {% endwith %}
+        <form method="POST" action="{{ url_for('signup') }}">
+            <input type="text" name="username" placeholder="username"></input>
+            <input type="text" name="password" placeholder="password"></input>
+            <input type="text" name="email" placeholder="email"></input>
+            <button type="submit">submit</button>
+        </form>
+    </dir>
+
+</body>
+</html>
