@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+    {% if username %}
+        Hello {{ username }} !
+        <strong>
+            <a href="{{ url_for('logout', username=username) }}">logout</a>
+        </strong>
+    {% else %}
+        You're not login yet, please
+        <strong><a href="/login">login</a></strong> first.
+    {% endif %}
+</body>
+</html>
