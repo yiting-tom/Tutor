@@ -1,38 +1,13 @@
-<html>
-<head>
-    <title>Home Page</title>
-</head>
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Index Page</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.css"/>
+    </head>
+    <body>
 
-<body>
-    <h1>index</h1>
-    <div>
-        <h1>Hi! {{ username }} good to see you!</h1>
-        <ul>
-            <li>
-                <a href="/login">{{ url_for('login') }}</a>
-            </li>
-            <li>
-                <a href="/signup">{{ url_for('signup') }}</a>
-            </li>
-        </ul>
-
-        <!-- 使用者列表 -->
-        {% if users %}
-        <form method="post" action={{ url_for('index') }}>
-            <ul>
-                {% for user in users %}
-                    <li>
-                        <input type="checkbox" name="delete_users" value="{{ user.id }}">
-                        <label for="{{ user.username }}">{{ user.username }}</label>
-                        <a href="{{ url_for('user', username=user.username) }}">edit {{ user.name }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-            <button type="submit">delete users</button>
-        </form>
-        {% endif %}
-
-    </div>
-
-</body>
+    </body>
 </html>

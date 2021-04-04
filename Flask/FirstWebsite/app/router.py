@@ -5,11 +5,10 @@ import sys
 from __init__ import *
 from users import User
 
-
-# 初始頁面
-@app.route('/', methods=['GET', 'POST'])
-@app.route('/<username>')
-def index(username=None):
+# Home Page
+@app.route('/home', methods=['GET', 'POST'])
+@app.route('/home/<username>')
+def home(username=None):
     if request.method == 'POST':
         # 從 request 抓出 delete_users 的值(user.id)
         del_id = request.values['delete_users']
@@ -22,7 +21,7 @@ def index(username=None):
         db.session.delete(del_user)
         db.session.commit()
 
-    return render_template('index.html', username=username, users=User.query.all())
+    return render_template('home.html', username=username, users=User.query.all())
 
 
 # 註冊頁面
@@ -44,7 +43,7 @@ def signup():
             db.session.add(new_user)
             # 處理待辦事項
             db.session.commit()
-            # 返回index
+            # 返回home
             return redirect(url_for('login'))
         except sqlalchemy.exc.IntegrityError as err:
             # 提示錯誤
@@ -64,7 +63,7 @@ def login():
         # 確認是否在DB裡面
         if User.can_login(username, password):
             # 登入成功
-            return redirect(url_for('index', username=username))
+            return redirect(url_for('home', username=username))
 
         flash('未知的帳號或密碼')
 
