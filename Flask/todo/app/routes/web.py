@@ -15,7 +15,8 @@ def signup():
 
         if not(User.in_db(request.form)):
             new_user = User.insert(request.form)
-            print(new_user, file=sys.stderr)
+            if new_user:
+                return render_template('home.html')
 
     return render_template('signup.html')
 

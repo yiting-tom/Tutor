@@ -1,5 +1,6 @@
 r"""The entry point."""
 from __init__ import *
+from migrations import database
 from routes.web import *
 
 

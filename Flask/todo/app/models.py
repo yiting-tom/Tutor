@@ -1,9 +1,15 @@
 r"""Contain all modules."""
+from sqlalchemy import Column, String, Integer
+from typing import TypeVar
+
 from __init__ import *
-from sqlalchemy import Model, Column, String, Integer
+from migrations.database import Base, session
 
 
-class User(db.Model):
+User = TypeVar('User')
+
+
+class User(Base):
     r"""User model.
 
     """
@@ -44,10 +50,10 @@ class User(db.Model):
         return User.query.filter_by(
             username=form['username'],
             password=form['password'],
-            email=form['email']) is not None
+            email=form['email']).all()
 
     @staticmethod
-    def insert(form) -> db.Model:
+    def insert(form) -> User:
         r"""Insert into DB.
 
         Parameters
@@ -66,7 +72,20 @@ class User(db.Model):
             email=form['email'],
         )
 
-        db.session.add(new_user)
-        db.session.commit()
+        session.add(new_user)
+        session.commit()
 
         return new_user
+
+
+class Product(Base):
+    r"""User model.
+
+    """
+    # Table name.
+    __tablename__ = 'Products'
+    # Table columns.
+    id = Column(Integer, primary_key=True)
+    product_name = Column(String(31), unique=True, nullable=False)
+    product_type = Column(String(31), unique=True, nullable=False)
+    product_price = Column(Integer, unique=True, nullable=False)
