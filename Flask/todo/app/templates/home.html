@@ -1,9 +1,11 @@
-{% extends "layouts/base.html" %}
+{% extends "layouts/navbar.html" %}
 
 {% block title %}Index Page{% endblock %}
 
 {% block content %}
 <div class="container pt-3">
     Home Page
+    <a href={{ url_for('index') }}>go to index page</a>
+    {% include "layouts/side_bar.html" %}
 </div>
 {% endblock content %}

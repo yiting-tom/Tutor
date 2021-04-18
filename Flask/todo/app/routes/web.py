@@ -4,9 +4,9 @@ from __init__ import *
 from models import User
 
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+@app.route('/', defaults={'username': 'boo'})
+def index(username: str):
+    return render_template('index.html', username=username)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -29,3 +29,8 @@ def login():
 @app.route('/home')
 def home():
     return render_template('home.html')
+
+
+@app.route('/product')
+def product():
+    return render_template('product.html')
