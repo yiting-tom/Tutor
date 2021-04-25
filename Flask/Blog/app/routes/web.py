@@ -25,15 +25,12 @@ def login():
     form = LoginForm()
     # Correct form format.
     if form.validate_on_submit():
-        # Get user from DB.
-        user = User.query.filter_by(username=form.username.data).first()
-        # Login Failed.
-        if user is None\
-                or user.check_password(form.password.data):
-            flash('Invalid username or password.')
-            return redirect(url_for('login'))
-        # Login.
-        login_user(user, remember=form.remember_me.data)
+        # User login.
+        try:
+            User.login(form)
+        except ValueError as error:
+            flash(error)
+
         # Get next page.
         next_page = request.args.get('next')
         if not next_page\
@@ -54,12 +51,12 @@ def logout():
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
+
+    # Registration.
     form = RegisterForm()
-    if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
-        user.set_password(form.password.data)
-        db.session.add(user)
-        db.session.commit()
+
+    if form.validate_on_submit():       # insert into db.
+        User(form, add_to_db=True)      # implement a new user.
         flash('Registration successful!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Registration', form=form)

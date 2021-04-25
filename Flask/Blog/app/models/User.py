@@ -1,6 +1,7 @@
 # for forms.
+from typing import Union
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 # for user password.
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -54,6 +55,13 @@ class RegisterForm(FlaskForm):
             DataRequired()]
     )
 
+    sex = SelectField(
+        label='Sex',
+        choices=[(0, 'Female'), (1, 'Male'), (2, 'Others')],
+        validators=[
+            DataRequired()]
+    )
+
     submit = SubmitField('Register')
 
     def validate_username(self, username):
@@ -75,20 +83,48 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(31), index=True, unique=True)
     email = db.Column(db.String(63), index=True, unique=True)
     password_hash = db.Column(db.String(128))
+    sex = db.Column(db.Numeric(4))
+
+    def __init__(self, form: LoginForm, **kwargs):
+        self.username = form.username.data
+        self.email = form.email.data
+        self.sex = form.sex.data
+        self.password_hash = generate_password_hash(form.password.data)
+
+        if kwargs.get('add_to_db'):
+            db.session.add(self)
+            db.session.commit()
 
     def __repr__(self):
         return f"<User {self.id} {self.username}"
 
-    def set_password(self, password):
-        r"""Set the user's password with hashed."""
-        self.password_hash = generate_password_hash(password)
-
-    def check_password(self, password):
+    def check_password(self, args: Union[str, LoginForm]) -> bool:
         r"""check the user's password is correct.'"""
+        password = args
+        if isinstance(args, LoginForm):
+            password = args.password.data
         return check_password_hash(self.password_hash, password)
+
+    @staticmethod
+    def get_user_by_form(form: LoginForm) -> bool:
+        r"""Check user can login."""
+        return User.query.filter_by(
+            username=form.username.data,
+        ).first()
 
     @staticmethod
     @login.user_loader
     def load_user(uid):
         r"""Load in user."""
         return User.query.get(int(uid))
+
+    @staticmethod
+    def login(form: LoginForm) -> User:
+        user = User.get_user_by_form(form)
+
+        if user is None or not user.check_password(form):
+            raise ValueError('Invalid username or password.')
+
+        login_user(user, remember=form.remember_me.data)
+        return user
+
