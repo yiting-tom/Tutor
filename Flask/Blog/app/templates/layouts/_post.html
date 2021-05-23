@@ -1,0 +1,13 @@
+<table>
+  <img src="{{ post.user().avatar(36) }}">
+  {{ post.user().username }} post:
+  {% if request.endpoint == 'user' %}
+    <a href="{{ url_for('edit_post', pid=post.id) }}">edit</a>
+  {% endif %}
+  <hr>
+  title: {{ post.title }}
+  <br>
+  body: {{ post.body }}
+  <hr>
+  <hr>
+</table>

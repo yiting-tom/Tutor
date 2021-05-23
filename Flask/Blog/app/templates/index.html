@@ -8,12 +8,29 @@ Index
 
     <h1>Hi, {{ current_user.username }}!</h1>
 
-    {% for post in posts %}
-        <div>
+    <div class="container">
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
             <p>
-                {{ post.author.username }} says: <b>{{ post.body }}</b>
+                {{ form.title.label }}<br>
+                {{ form.title(size=32) }}
+                {% for error in form.title.errors %}
+                <small class="text-muted">{{ error }}</small>
+                {% endfor %}
             </p>
-        </div>
+            <p>
+                {{ form.body.label }}<br>
+                {{ form.body() }}
+                {% for error in form.body.errors %}
+                <small class="text-muted">{{ error }}</small>
+                {% endfor %}
+            </p>
+            <p>{{ form.submit() }}</p>
+        </form>
+    </div>
+
+    {% for post in posts %}
+    {% include "layouts/_post.html" %}
     {% endfor %}
 
 {% endblock %}
