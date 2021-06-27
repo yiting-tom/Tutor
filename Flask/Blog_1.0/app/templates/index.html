@@ -1,0 +1,36 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Index
+{% endblock %}
+
+{% block content %}
+
+    <h1>Hi, {{ current_user.username }}!</h1>
+
+    <div class="container">
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.title.label }}<br>
+                {{ form.title(size=32) }}
+                {% for error in form.title.errors %}
+                <small class="text-muted">{{ error }}</small>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.body.label }}<br>
+                {{ form.body() }}
+                {% for error in form.body.errors %}
+                <small class="text-muted">{{ error }}</small>
+                {% endfor %}
+            </p>
+            <p>{{ form.submit() }}</p>
+        </form>
+    </div>
+
+    {% for user, post in pairs %}
+    {% include "layouts/_post.html" %}
+    {% endfor %}
+
+{% endblock %}
