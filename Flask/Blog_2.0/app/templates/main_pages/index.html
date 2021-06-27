@@ -1,0 +1,25 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+index
+{% endblock %}
+
+{% block content %}
+
+hello world
+<hr>
+
+{% if current_user.is_authenticated %}
+<a href="{{ url_for('post.new_post') }}">New Post</a>
+{% else %}
+It seems that you have not log in yet.
+<a href="{{ url_for('main.login') }}">Log in</a>
+{% endif %}
+
+<hr>
+
+{% for post in posts %}
+{% include "layouts/_post.html" %}
+{% endfor %}
+
+{% endblock %}

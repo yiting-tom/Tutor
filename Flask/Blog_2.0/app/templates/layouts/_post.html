@@ -1,0 +1,19 @@
+<table>
+  <!-- head icon -->
+  <img src="{{ post.author.avatar(36) }}">
+  <!-- user name -->
+  {{ post.author.username }} post:
+  {% if current_user == post.author %}
+  <a type="button" class="btn btn-outline-primary mr-3"
+          href="{{ url_for('post.update_post', post_id=post.id) }}">Edit</a>
+
+  <a type="button" class="btn btn-outline-danger"
+     href="{{ url_for('post.delete_post', post_id=post.id) }}">Delete</a>
+
+  {% endif %}
+  <br>
+  title: {{ post.title }}
+  <br>
+  content: {{ post.content }}
+  <hr>
+</table>
